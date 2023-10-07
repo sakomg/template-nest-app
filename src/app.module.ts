@@ -6,6 +6,7 @@ import { configuration } from 'config/configuration';
 import { validationSchema } from 'config/validation';
 import { SftpModule } from './sftp/sftp.module';
 import { DemoModule } from './demo/demo.module';
+import { JsonServerModule } from './json-server/json-server.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { DemoModule } from './demo/demo.module';
     SftpModule,
     SalesforceModule,
     DemoModule,
+    JsonServerModule,
   ],
 })
 export class AppModule {}

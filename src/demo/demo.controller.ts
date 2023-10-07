@@ -6,18 +6,16 @@ export class DemoController {
   constructor(private readonly service: DemoService) {}
 
   @Get(':id')
-  findOne(@Param() params: any): any {
-    console.log(params.id);
+  getOne(@Param() params: any): any {
     return {
       id: params.id,
     };
   }
 
   @Get()
-  getData() {
-    return {
-      test: 'test',
-    };
+  async getAll() {
+    const result = await this.service.execute();
+    return result;
   }
 
   @Post('/start')

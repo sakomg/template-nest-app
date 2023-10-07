@@ -6,8 +6,8 @@ import { DemoService } from './demo.service';
 export class DemoScheduler {
   constructor(private readonly service: DemoService) {}
 
-  @Timeout(1000)
-  async handleExtract() {
+  // @Timeout(1000)
+  handleExtract() {
     console.log('🚀 scheduler triggered on', new Date().toLocaleTimeString());
     try {
       this.service.execute();

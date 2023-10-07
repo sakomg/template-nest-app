@@ -60,7 +60,6 @@ export class SalesforceApi {
   async fetchAllRecords(query: string): Promise<Array<any>> {
     if (!query && !query.length) return;
     let records: Array<any> = [];
-
     const result = await this.connect.query(query.trim());
     records = records.concat(result.records);
 

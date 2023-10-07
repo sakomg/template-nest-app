@@ -27,9 +27,6 @@ export class SftpService {
         host: this.config.get('SFTP_HOST'),
         username: this.config.get('SFTP_USERNAME'),
         password: this.config.get('SFTP_PASSWORD'),
-        algorithms: {
-          serverHostKey: ['ssh-rsa', 'ssh-dss'],
-        },
       });
     });
   }
