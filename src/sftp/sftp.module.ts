@@ -3,5 +3,6 @@ import { SftpService } from './sftp.service';
 
 @Module({
   providers: [SftpService],
+  exports: [SftpService],
 })
 export class SftpModule {}

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Timeout } from '@nestjs/schedule';
-import { Service } from './service';
+import { DemoService } from './demo.service';
 
 @Injectable()
-export class Scheduler {
-  constructor(private readonly service: Service) {}
+export class DemoScheduler {
+  constructor(private readonly service: DemoService) {}
 
   @Timeout(1000)
   async handleExtract() {

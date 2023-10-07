@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { SalesforceService } from './salesforce.service';
 import { SalesforceApi } from './salesforce.api';
+import { SalesforceService } from './salesforce.service';
 
 @Module({
-  providers: [SalesforceService, SalesforceApi],
+  providers: [SalesforceApi, SalesforceService],
+  exports: [SalesforceService],
 })
 export class SalesforceModule {}

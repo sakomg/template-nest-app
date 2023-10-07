@@ -49,7 +49,7 @@ export class SalesforceApi {
     return new Promise((res, rej) => {
       this.connect.sobject(objectName).describe((err: Error, metadata: DescribeSObjectResult) => {
         if (err) {
-          console.log(err);
+          console.error(err);
           rej(err);
         }
         res(metadata);
@@ -78,11 +78,14 @@ export class SalesforceApi {
   }
 
   async insertRecord(sobject: string, record: any) {
-    this.connect.sobject(sobject).create(record, (err: any, ret: any) => {
-      if (err || !ret.success) {
-        return console.error(err);
-      }
-      console.log('created record id: ' + ret.id);
+    return new Promise((res, rej) => {
+      this.connect.sobject(sobject).create(record, (err: any, ret: any) => {
+        if (err || !ret.success) {
+          console.error(err);
+          rej(err);
+        }
+        res(ret.id);
+      });
     });
   }
 
@@ -97,12 +100,12 @@ export class SalesforceApi {
   handleLoadResult(err: Error, res: any[]) {
     const errorResult = [];
     if (err) {
-      console.log('error in bulk load', err);
+      console.error('error in bulk load', err);
       // log error in sf
     } else {
       for (let i = 0; i < res.length; i++) {
         if (!res[i].success) {
-          console.log(`#${i + 1} error occurred, message = ${res[i].errors.join(',')}`);
+          console.error(`#${i + 1} error occurred, message = ${res[i].errors.join(',')}`);
           errorResult.push(res[i].errors.join(','));
         }
       }

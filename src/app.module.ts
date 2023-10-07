@@ -5,7 +5,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { configuration } from 'config/configuration';
 import { validationSchema } from 'config/validation';
 import { SftpModule } from './sftp/sftp.module';
-import { SchedulersModule } from './schedulers/schedulers.module';
+import { DemoModule } from './demo/demo.module';
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import { SchedulersModule } from './schedulers/schedulers.module';
     }),
     SftpModule,
     SalesforceModule,
-    SchedulersModule,
+    DemoModule,
   ],
 })
 export class AppModule {}
