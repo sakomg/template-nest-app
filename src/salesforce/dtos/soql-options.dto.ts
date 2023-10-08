@@ -9,5 +9,6 @@ export class SoqlOptionsDto {
   @IsNotEmpty()
   fields: Array<string>;
 
+  @IsString()
   where?: string;
 }

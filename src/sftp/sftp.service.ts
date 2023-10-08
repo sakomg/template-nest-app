@@ -10,7 +10,7 @@ export class SftpService {
     this.client = new Client();
   }
 
-  async doConnect(): Promise<void> {
+  doConnect(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.client.on('ready', () => {
         console.log('✅ success connection to sftp server');
@@ -31,7 +31,7 @@ export class SftpService {
     });
   }
 
-  async listFiles(directoryPath: string, fileExtension: string): Promise<string[]> {
+  listFiles(directoryPath: string, fileExtension: string): Promise<string[]> {
     return new Promise((resolve, reject) => {
       this.client.sftp((err: any, sftp: SFTPWrapper) => {
         if (err) {

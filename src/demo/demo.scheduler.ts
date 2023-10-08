@@ -6,13 +6,14 @@ import { DemoService } from './demo.service';
 export class DemoScheduler {
   constructor(private readonly service: DemoService) {}
 
-  // @Timeout(1000)
-  handleExtract() {
+  @Timeout(1000)
+  async handleExtract() {
     console.log('🚀 scheduler triggered on', new Date().toLocaleTimeString());
     try {
-      this.service.execute();
+      const result = await this.service.execute();
+      console.log(result);
     } catch (error) {
-      console.log('error during start process', JSON.stringify(error));
+      console.error('error during start process', JSON.stringify(error));
     }
   }
 }

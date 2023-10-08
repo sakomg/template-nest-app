@@ -12,7 +12,19 @@ export class JsonServerService {
       this.httpService.get<any>('https://jsonplaceholder.typicode.com/todos').pipe(
         catchError((error: AxiosError) => {
           console.error(error.response.data);
-          throw 'An error happened!';
+          throw `An error happened: ${error.response.data}`;
+        }),
+      ),
+    );
+    return data;
+  }
+
+  async findOneById(id: string): Promise<any> {
+    const { data } = await firstValueFrom(
+      this.httpService.get<any>('https://jsonplaceholder.typicode.com/todos/' + id).pipe(
+        catchError((error: AxiosError) => {
+          console.error(error.response.data);
+          throw `An error happened: ${error.response.data}`;
         }),
       ),
     );

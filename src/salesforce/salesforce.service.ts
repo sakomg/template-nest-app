@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { SalesforceApi } from './salesforce.api';
-import { SoqlOptionsDto } from './dtos/soql-options.dto';
+import { SoqlBuilder } from './salesforce.soql-builder';
 
 @Injectable()
 export class SalesforceService {
@@ -10,16 +10,8 @@ export class SalesforceService {
     await this.api.loginViaOAUTH2();
   }
 
-  async getRecordsByQuery(query: string) {
+  async getRecords(query: string) {
     return await this.api.fetchAllRecords(query);
-  }
-
-  async getRecordsByOptions(soqlOptions: SoqlOptionsDto) {
-    const records = await this.api.fetchAllRecords(`
-      SELECT ${soqlOptions.fields.join(', ')} 
-      FROM ${soqlOptions.from} 
-    `);
-    return records;
   }
 
   async getObjectDescribe(sObjectName: string) {
@@ -32,5 +24,9 @@ export class SalesforceService {
 
   async insertRecord(sObjectName: string, record: object) {
     return await this.api.insertRecord(sObjectName, record);
+  }
+
+  newQuery() {
+    return new SoqlBuilder();
   }
 }
