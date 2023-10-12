@@ -18,12 +18,16 @@ export class SalesforceService {
     return await this.api.fetchObjectDescribe(sObjectName);
   }
 
-  async upsertRecords(sObjectName: string, records: Array<any>, externalId: any) {
-    await this.api.upsertRecords(records, sObjectName, externalId);
-  }
-
   async insertRecord(sObjectName: string, record: object) {
     return await this.api.insertRecord(sObjectName, record);
+  }
+
+  async deleteRecord(sObjectName: string, recordId: string) {
+    return await this.api.deleteRecord(sObjectName, recordId);
+  }
+
+  upsertRecords(sObjectName: string, records: Array<any>, externalId: any) {
+    this.api.upsertRecords(records, sObjectName, externalId);
   }
 
   newQuery() {

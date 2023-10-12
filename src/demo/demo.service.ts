@@ -13,17 +13,12 @@ export class DemoService {
 
   async execute() {
     await Promise.all([this.salesforce.doConnect(), this.sftp.doConnect()]);
-    const soqlQuery = this.salesforce
-      .newQuery()
-      .select('Name', 'CreatedDate')
-      .from('Account')
-      .orderBy('Name ASC')
-      .setLimit(10)
-      .build();
+    const soqlQuery = this.salesforce.newQuery().select('Id', 'Name', 'CreatedDate').from('Account').orderBy('Name ASC').build();
 
     const accounts = await this.salesforce.getRecords(soqlQuery);
+
     const files = await this.sftp.listFiles('/', '.csv');
-    const todos = await this.jsonServer.findAll();
+    const todos = await this.jsonServer.findOneById('6');
     return {
       accounts,
       files,

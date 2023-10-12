@@ -82,17 +82,33 @@ export class SalesforceApi {
         if (err || !ret.success) {
           console.error(err);
           rej(err);
+        } else {
+          res(ret.id);
         }
-        res(ret.id);
       });
     });
   }
 
-  async bulkUpsert(sObjectName: string, externalId: BulkOptions, data: string | Array<any>) {
+  upsertRecords(records: Array<any>, object: string, externalId: BulkOptions) {
+    const parser = new Parser();
+    const csv = parser.parse(records);
     this.connect.bulk.pollTimeout = Number.MAX_VALUE;
     const operation: BulkLoadOperation = 'upsert';
-    this.connect.bulk.load(sObjectName, operation, externalId, data, (err: Error, res: RecordResult[] | BatchResultInfo[]) => {
+    this.connect.bulk.load(object, operation, externalId, csv, (err: Error, res: RecordResult[] | BatchResultInfo[]) => {
       this.handleLoadResult(err, res);
+    });
+  }
+
+  deleteRecord(sobject: string, recordId: string) {
+    return new Promise((res, rej) => {
+      this.connect.sobject(sobject).delete(recordId, (err: any, ret: any) => {
+        if (err || !ret.success) {
+          console.error('err', err);
+          rej(err);
+        } else {
+          res(ret.id);
+        }
+      });
     });
   }
 
@@ -113,11 +129,5 @@ export class SalesforceApi {
         // log errors in sf
       }
     }
-  }
-
-  async upsertRecords(records: Array<any>, object: string, externalId: BulkOptions) {
-    const parser = new Parser();
-    const csv = parser.parse(records);
-    await this.bulkUpsert(object, externalId, csv);
   }
 }
