@@ -1,7 +1,4 @@
 # Nest.js and Salesforce
-<span style="color:gray;font-weight:700;font-size:25px">
-Integrations with third-party systems
-</span>
 
 ---
 
