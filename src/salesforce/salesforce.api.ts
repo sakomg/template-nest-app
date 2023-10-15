@@ -76,7 +76,7 @@ export class SalesforceApi {
     return records;
   }
 
-  async insertRecord(sobject: string, record: any) {
+  async insertRecord(sobject: string, record: any): Promise<string> {
     return new Promise((res, rej) => {
       this.connect.sobject(sobject).create(record, (err: any, ret: any) => {
         if (err || !ret.success) {
@@ -99,7 +99,7 @@ export class SalesforceApi {
     });
   }
 
-  deleteRecord(sobject: string, recordId: string) {
+  deleteRecord(sobject: string, recordId: string): Promise<string> {
     return new Promise((res, rej) => {
       this.connect.sobject(sobject).delete(recordId, (err: any, ret: any) => {
         if (err || !ret.success) {

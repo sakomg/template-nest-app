@@ -10,27 +10,27 @@ export class SalesforceService {
     await this.api.loginViaOAUTH2();
   }
 
-  async getRecords(query: string) {
+  async getRecords(query: string): Promise<Array<any>> {
     return await this.api.fetchAllRecords(query);
   }
 
-  async getObjectDescribe(sObjectName: string) {
+  async getObjectDescribe(sObjectName: string): Promise<any> {
     return await this.api.fetchObjectDescribe(sObjectName);
   }
 
-  async insertRecord(sObjectName: string, record: object) {
+  async insertRecord(sObjectName: string, record: object): Promise<string> {
     return await this.api.insertRecord(sObjectName, record);
   }
 
-  async deleteRecord(sObjectName: string, recordId: string) {
+  async deleteRecord(sObjectName: string, recordId: string): Promise<string> {
     return await this.api.deleteRecord(sObjectName, recordId);
   }
 
-  upsertRecords(sObjectName: string, records: Array<any>, externalId: any) {
+  upsertRecords(sObjectName: string, records: Array<any>, externalId: any): void {
     this.api.upsertRecords(records, sObjectName, externalId);
   }
 
-  newQuery() {
+  newQuery(): SoqlBuilder {
     return new SoqlBuilder();
   }
 }
