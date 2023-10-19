@@ -8,4 +8,7 @@ export const validationSchema = Joi.object({
   SF_CLIENT_SECRET: Joi.string().required(),
   SF_USERNAME: Joi.string().required(),
   SF_PASSWORD: Joi.string().required(),
+  SFTP_HOST: Joi.string().required(),
+  SFTP_USERNAME: Joi.string().required(),
+  SFTP_PASSWORD: Joi.string().required(),
 });
