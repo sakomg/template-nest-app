@@ -23,7 +23,7 @@ export class SftpService {
       });
 
       this.client.connect({
-        port: 22,
+        port: 22, // sftp default
         host: this.config.get('SFTP_HOST'),
         username: this.config.get('SFTP_USERNAME'),
         password: this.config.get('SFTP_PASSWORD'),
@@ -31,7 +31,7 @@ export class SftpService {
     });
   }
 
-  listFiles(directoryPath: string, fileExtension: string): Promise<string[]> {
+  getListFiles(directoryPath: string, fileExtension: string): Promise<string[]> {
     return new Promise((resolve, reject) => {
       this.client.sftp((err: any, sftp: SFTPWrapper) => {
         if (err) {
@@ -45,9 +45,11 @@ export class SftpService {
             reject(err);
           }
 
-          const filteredFiles = files
-            .filter((file: any) => file.filename.endsWith(fileExtension))
-            .map((file: any) => file.filename);
+          let filteredFiles = files.map((file: any) => file.filename);
+
+          if (fileExtension) {
+            filteredFiles = filteredFiles.filter((filename: string) => filename.endsWith(fileExtension));
+          }
 
           resolve(filteredFiles);
         });
@@ -55,7 +57,7 @@ export class SftpService {
     });
   }
 
-  retrieveDataByFileName(remoteFilePath: string): Promise<string> {
+  getDataByFilename(remoteFilePath: string): Promise<string> {
     return new Promise((resolve, reject) => {
       this.client.sftp((err: Error | undefined, sftp: SFTPWrapper) => {
         if (err) {
@@ -75,7 +77,7 @@ export class SftpService {
     });
   }
 
-  disconnect(): void {
+  doDisconnect(): void {
     if (this.client && !this.client._destroyed) {
       this.client.end();
       console.log('👍 disconnected from SFTP server');
